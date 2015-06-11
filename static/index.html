@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Demo of Firefly Tools</title>
+	<!-- script name is fftools.nocache.js -->
+	<script src='http://lsst.cs.illinois.edu:8080/fftools/fftools.nocache.js'></script>
+ 
+</head>
+<body>
+ 
+<!-- need a div id to plot to -->
+<div id="primaryID" style="width: 300px; height: 300px;"></div>
+ 
+<div id="table" style="width: 200px; height: 600px;"></div>
+ 
+ 
+<script type="text/javascript">
+		// this function must exist, called when fftools loads
+	var onFireflyLoaded = function() {
+		var primaryViewer = firefly.makeImageViewer('primaryID');
+		primaryViewer.plot({
+			"URL" : "http://web.ipac.caltech.edu/staff/roby/demo/wise-m51-band2.fits",
+			"Title" : "Some WISE image",
+			"ZoomType" : "TO_WIDTH"
+		});
+	}
+</script>
+ 
+</body>
+</html>
