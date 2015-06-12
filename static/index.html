@@ -4,25 +4,51 @@
 	<title>Demo of Firefly Tools</title>
 	<!-- script name is fftools.nocache.js -->
 	<script src='http://lsst.cs.illinois.edu:8080/fftools/fftools.nocache.js'></script>
- 
+ 	<script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
 </head>
 <body>
  
 <!-- need a div id to plot to -->
 <div id="primaryID" style="width: 300px; height: 300px;"></div>
- 
-<div id="table" style="width: 200px; height: 600px;"></div>
+<div id="fireflyEvent">
+</div>
  
  
 <script type="text/javascript">
 		// this function must exist, called when fftools loads
 	var onFireflyLoaded = function() {
+		var viewer = loadFirefly();
+		var actions= firefly.appFlux.getActions('ExternalAccessActions');
+		actions.extensionAdd({
+			id : "showPoint",
+			plotID : 'primaryID',
+			title : "Get point",
+			toolTip : "a tool tip",
+			extType: "POINT",
+			callback : function(data){
+				var imgpoint = data.ipt;
+				var worldpoint = data.wpt;
+				var theImagePoint = "Image Point:("+imgpoint.x
+									+","+imgpoint.y+")\n";
+				var theWorldPoint = "World Point:("+worldpoint.x
+									+","+worldpoint.y+")\n";
+				updatePosition(theImagePoint+theWorldPoint);
+				window.thepointdata = data;
+			}
+		})
+	}
+
+	function updatePosition(message){
+		$("#fireflyEvent").text(message);
+	}
+	function loadFirefly(){
 		var primaryViewer = firefly.makeImageViewer('primaryID');
 		primaryViewer.plot({
 			"URL" : "http://web.ipac.caltech.edu/staff/roby/demo/wise-m51-band2.fits",
 			"Title" : "Some WISE image",
 			"ZoomType" : "TO_WIDTH"
 		});
+		return primaryViewer;
 	}
 </script>
  
