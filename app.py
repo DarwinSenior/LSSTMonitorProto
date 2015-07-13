@@ -1,5 +1,10 @@
 from flask import Flask, redirect, request, abort, send_file
+from flask.ext.cors import CORS
+
+
 app = Flask(__name__, static_url_path="")
+
+CORS(app, resources=r'*', allow_headers='Content-Type')
 
 @app.route('/')
 def intropage():
