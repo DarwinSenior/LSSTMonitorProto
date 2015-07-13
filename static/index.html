@@ -35,6 +35,20 @@
 				updatePosition(theImagePoint+theWorldPoint);
 				window.thepointdata = data;
 			}
+		});
+		actions.extensionAdd({
+			id : "showRegion",
+			plotID : 'primaryID',
+			title : "Get Region",
+			toolTip : "a tool tip",
+			extType : 'AREA_SELECT',
+			callback : function(data){
+				var ipt = [data.ipt0, data.ipt1];
+				var wpt = [data.wpt0, data.wpt1];
+				var imgPoint = "IPT("+ipt[0].x+","+ipt[0].y+")->("
+									+")"+ipt[1].x+","+ipt[1].y+")\n";
+				updatePosition(imgPoint);
+			}
 		})
 	}
 
@@ -44,7 +58,7 @@
 	function loadFirefly(){
 		var primaryViewer = firefly.makeImageViewer('primaryID');
 		primaryViewer.plot({
-			"URL" : "http://web.ipac.caltech.edu/staff/roby/demo/wise-m51-band2.fits",
+			"URL" : "/images/image.fits",
 			"Title" : "Some WISE image",
 			"ZoomType" : "TO_WIDTH"
 		});
